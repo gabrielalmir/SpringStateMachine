@@ -1,4 +1,4 @@
-package br.com.gabrielalmir.springstatemachine;
+package br.com.gabrielalmir.springstatemachine.order.states;
 
 public enum OrderStates {
     NEW,
@@ -6,5 +6,6 @@ public enum OrderStates {
     PAID,
     SHIPPED,
     COMPLETED,
-    CANCELLED
+    CANCELLED,
+    NONE
 }

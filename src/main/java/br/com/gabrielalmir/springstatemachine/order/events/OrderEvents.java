@@ -1,4 +1,4 @@
-package br.com.gabrielalmir.springstatemachine;
+package br.com.gabrielalmir.springstatemachine.order.events;
 
 public enum OrderEvents {
     VALIDATE,

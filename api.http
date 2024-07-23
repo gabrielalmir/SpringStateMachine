@@ -1,0 +1,7 @@
+### POST Order new
+
+POST localhost:8080/order/new
+
+### POST Order ship
+
+POST localhost:8080/order/ship

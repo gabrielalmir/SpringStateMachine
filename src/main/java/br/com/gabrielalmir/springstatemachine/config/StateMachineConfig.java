@@ -1,5 +1,7 @@
-package br.com.gabrielalmir.springstatemachine;
+package br.com.gabrielalmir.springstatemachine.config;
 
+import br.com.gabrielalmir.springstatemachine.order.events.OrderEvents;
+import br.com.gabrielalmir.springstatemachine.order.states.OrderStates;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.statemachine.action.Action;
@@ -10,9 +12,11 @@ import org.springframework.statemachine.config.builders.StateMachineStateConfigu
 import org.springframework.statemachine.config.builders.StateMachineTransitionConfigurer;
 import org.springframework.statemachine.listener.StateMachineListener;
 import org.springframework.statemachine.listener.StateMachineListenerAdapter;
+import org.springframework.statemachine.state.State;
 import org.springframework.statemachine.transition.Transition;
 
 import java.util.EnumSet;
+import java.util.Optional;
 
 @Configuration
 @EnableStateMachineFactory
@@ -55,7 +59,13 @@ public class StateMachineConfig extends EnumStateMachineConfigurerAdapter<OrderS
         return new StateMachineListenerAdapter<>() {
             @Override
             public void transition(Transition<OrderStates, OrderEvents> transition) {
-                System.out.println("Transition from: " + transition.getSource().getId() + " to: " + transition.getTarget().getId());
+                var target = Optional.ofNullable(transition.getTarget())
+                        .map(State::getId).orElse(OrderStates.NONE);
+
+                var source = Optional.ofNullable(transition.getSource())
+                        .map(State::getId).orElse(OrderStates.NONE);
+
+                System.out.printf("Transition from %s to %s%n", target, source);
             }
         };
     }

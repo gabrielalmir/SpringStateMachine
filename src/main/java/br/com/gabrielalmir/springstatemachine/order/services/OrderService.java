@@ -1,5 +1,7 @@
-package br.com.gabrielalmir.springstatemachine;
+package br.com.gabrielalmir.springstatemachine.order.services;
 
+import br.com.gabrielalmir.springstatemachine.order.states.OrderStates;
+import br.com.gabrielalmir.springstatemachine.order.events.OrderEvents;
 import org.springframework.messaging.support.MessageBuilder;
 import org.springframework.statemachine.StateMachine;
 import org.springframework.statemachine.config.StateMachineFactory;
@@ -20,7 +22,7 @@ public class OrderService {
         validateOrder();
     }
 
-    private void initOrderSaga() {
+    public void initOrderSaga() {
         System.out.println("Initializing Order Saga");
         stateMachine = stateMachineFactory.getStateMachine();
         stateMachine.startReactively().subscribe();
@@ -28,7 +30,7 @@ public class OrderService {
         System.out.println("Order Saga Initialized: " + stateMachine.getState().getId());
     }
 
-    private void validateOrder() {
+    public void validateOrder() {
         System.out.println("Validating Order");
 
         stateMachine.sendEvent(Mono.just(MessageBuilder.withPayload(OrderEvents.VALIDATE).build()))
@@ -37,7 +39,7 @@ public class OrderService {
         System.out.println("Order Saga Validated: " + stateMachine.getState().getId());
     }
 
-    private void payOrder() {
+    public void payOrder() {
         System.out.println("Paying Order");
 
         stateMachine.sendEvent(Mono.just(MessageBuilder.withPayload(OrderEvents.PAY).build()))
@@ -46,7 +48,7 @@ public class OrderService {
         System.out.println("Order Saga Paid: " + stateMachine.getState().getId());
     }
 
-    private void shipOrder() {
+    public void shipOrder() {
         System.out.println("Shipping Order");
 
         stateMachine.sendEvent(Mono.just(MessageBuilder.withPayload(OrderEvents.SHIP).build()))
@@ -55,7 +57,7 @@ public class OrderService {
         System.out.println("Order Saga Shipped: " + stateMachine.getState().getId());
     }
 
-    private void completeOrder() {
+    public void completeOrder() {
         System.out.println("Completing Order");
 
         stateMachine.sendEvent(Mono.just(MessageBuilder.withPayload(OrderEvents.COMPLETE).build()))
